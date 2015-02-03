@@ -89,6 +89,7 @@ medianClean
 
 
 ## Find Weekdays and Weekends
+## https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html
 cleanData$day <- format(cleanData$date, "%A")
 cleanData$day[cleanData$day == "Monday"] <- "weekday"
 cleanData$day[cleanData$day == "Tuesday"] <- "weekday"

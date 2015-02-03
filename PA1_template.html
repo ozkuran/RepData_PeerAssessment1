@@ -63,6 +63,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h2>Loading and preprocessing the data</h2>
 <div id="load-the-data" class="section level3">
 <h3>1. Load the data</h3>
+<p>Loaded data from <strong>csv</strong> formatted file.</p>
 <pre class="r"><code>activity&lt;-read.csv(&quot;activity.csv&quot;)
 ## Summary of unprocessed data
 summary(activity)</code></pre>
@@ -87,6 +88,7 @@ activity$date &lt;- as.Date(activity$date)</code></pre>
 <h2>What is mean total number of steps taken per day?</h2>
 <div id="make-a-histogram-of-the-total-number-of-steps-taken-each-day" class="section level3">
 <h3>1. Make a histogram of the total number of steps taken each day</h3>
+<p>Created Steps Per Day data and created <strong>histogram</strong> of this data.</p>
 <pre class="r"><code>## Load GGPLOT2 Library
 library(ggplot2)
 ## Extract data for Steps Per Day Histogram
@@ -107,6 +109,7 @@ dev.off()</code></pre>
 </div>
 <div id="calculate-and-report-the-mean-and-median-total-number-of-steps-taken-per-day" class="section level3">
 <h3>2. Calculate and report the <strong>mean</strong> and <strong>median</strong> total number of steps taken per day</h3>
+<p><strong>Mean</strong> and <strong>Median</strong> of data calculated.</p>
 <pre class="r"><code>## Calculate Mean Steps Per Day
 meanOrg &lt;- mean(stepsperday, na.rm=T)
 meanOrg</code></pre>
@@ -121,6 +124,7 @@ medianOrg</code></pre>
 <h2>What is the average daily activity pattern?</h2>
 <div id="make-a-time-series-plot-i.e.-type-l-of-the-5-minute-interval-x-axis-and-the-average-number-of-steps-taken-averaged-across-all-days-y-axis" class="section level3">
 <h3>1. Make a time series plot (i.e. <code>type = &quot;l&quot;</code>) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)</h3>
+<p>Created time series of 5 minutes activity average.</p>
 <pre class="r"><code>## Extract data for Steps Per 5 Minute Time Series Plot
 stepsPer5MinutesAverage&lt;-tapply(activity$steps,activity$interval,mean,na.rm=T)
 intervals &lt;- sort(unique(activity$interval,na.rm=T))
@@ -136,16 +140,19 @@ dev.off()</code></pre>
 </div>
 <div id="which-5-minute-interval-on-average-across-all-the-days-in-the-dataset-contains-the-maximum-number-of-steps" class="section level3">
 <h3>2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</h3>
+<p>Calculated highest 5 minute interval value.</p>
 <pre class="r"><code>## Interval with biggest mean
 highestMeanInterval &lt;- as.numeric(names(which.max(stepsPer5MinutesAverage)) )
 highestMeanInterval</code></pre>
 <pre><code>## [1] 835</code></pre>
+<p>Highest Mean interval is equal to <strong>835</strong>.</p>
 </div>
 </div>
 <div id="inputing-missing-values" class="section level2">
 <h2>Inputing missing values</h2>
 <div id="calculate-and-report-the-total-number-of-missing-values-in-the-dataset-i.e.the-total-number-of-rows-with-nas" class="section level3">
 <h3>1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with <code>NA</code>s)</h3>
+<p>Calculated missing values for each column.</p>
 <pre class="r"><code># Total Missing Data
 missingDataCountSteps &lt;- sum(is.na(activity$steps))
 missingDataCountDate &lt;- sum(is.na(activity$date))
@@ -163,6 +170,7 @@ missingDataCountSteps</code></pre>
 </div>
 <div id="create-a-new-dataset-that-is-equal-to-the-original-dataset-but-with-the-missing-data-filled-in." class="section level3">
 <h3>3. Create a new dataset that is equal to the original dataset but with the missing data filled in.</h3>
+<p>Loopede thru <strong>cleanData</strong> to replace <strong>NA</strong> values with that days <strong>mean</strong> value calculated before.</p>
 <pre class="r"><code># Initialize Clean Data
 cleanData &lt;- activity
 ## Replace NA's with mean
@@ -174,6 +182,7 @@ for(i in 1:nrow(cleanData)){
 </div>
 <div id="make-a-histogram-of-the-total-number-of-steps-taken-each-day-and-calculate-and-report-the-mean-and-median-total-number-of-steps-taken-per-day." class="section level3">
 <h3>4. Make a histogram of the total number of steps taken each day and Calculate and report the <strong>mean</strong> and <strong>median</strong> total number of steps taken per day.</h3>
+<p>Used <strong>tapply</strong> to calculate sum of steps per day in <strong>cleanData</strong>.</p>
 <pre class="r"><code>## Create Average Clean Data
 stepsperdayClean&lt;-tapply(cleanData$steps,cleanData$date,sum)
 ## Save Histogram as PNG
@@ -185,6 +194,7 @@ dev.off()</code></pre>
 <pre><code>## png 
 ##   2</code></pre>
 <p><img src="data:image/png;base64,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" alt="Steps Per Day After NA’s Filled With Mean" /></p>
+<p>Calculated <strong>mean</strong> and <strong>median</strong> of <strong>cleanData</strong>.</p>
 <pre class="r"><code>## Calculate Mean Steps Per Day
 meanClean &lt;- mean(stepsperdayClean, na.rm=T)
 meanClean</code></pre>
@@ -193,7 +203,7 @@ meanClean</code></pre>
 medianClean &lt;- median(stepsperdayClean, na.rm=T)
 medianClean</code></pre>
 <pre><code>## [1] 10765.59</code></pre>
-<p>As mean selected as filler for NA data. Mean value does not chane and change median is negligible.</p>
+<p>As <strong>mean</strong> of <strong>raw</strong> data selected as filler for <strong>NA</strong> data. <strong>Mean</strong> value does not change and change in <strong>median</strong> is negligible.</p>
 </div>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
@@ -202,6 +212,7 @@ medianClean</code></pre>
 <h3>1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.</h3>
 <p>Added a new column named <strong>day</strong> to <strong>cleanData</strong> which holds day of the week. And then classified those days as <strong>weekday</strong> and <strong>weekend</strong>.</p>
 <pre class="r"><code>## Find Weekdays and Weekends
+## https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html
 cleanData$day &lt;- format(cleanData$date, &quot;%A&quot;)
 cleanData$day[cleanData$day == &quot;Monday&quot;] &lt;- &quot;weekday&quot;
 cleanData$day[cleanData$day == &quot;Tuesday&quot;] &lt;- &quot;weekday&quot;

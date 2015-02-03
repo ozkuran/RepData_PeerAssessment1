@@ -12,6 +12,8 @@ and include the number of steps taken in 5 minute intervals each day.
 
 ### 1. Load the data
 
+Loaded data from **csv** formatted file.
+
 
 ```r
 activity<-read.csv("activity.csv")
@@ -46,6 +48,8 @@ activity$date <- as.Date(activity$date)
 
 ### 1. Make a histogram of the total number of steps taken each day
 
+Created Steps Per Day data and created **histogram** of this data.
+
 
 ```r
 ## Load GGPLOT2 Library
@@ -79,6 +83,9 @@ dev.off()
 
 ### 2. Calculate and report the **mean** and **median** total number of steps taken per day
 
+**Mean** and **Median** of data calculated.
+
+
 ```r
 ## Calculate Mean Steps Per Day
 meanOrg <- mean(stepsperday, na.rm=T)
@@ -103,6 +110,8 @@ medianOrg
 
 ### 1. Make a time series plot (i.e. `type = "l"`) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
+Created time series of 5 minutes activity average.
+
 
 ```r
 ## Extract data for Steps Per 5 Minute Time Series Plot
@@ -126,6 +135,8 @@ dev.off()
 
 ### 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
+Calculated highest 5 minute interval value. 
+
 
 ```r
 ## Interval with biggest mean
@@ -137,9 +148,13 @@ highestMeanInterval
 ## [1] 835
 ```
 
+Highest Mean interval is equal to **835**.
+
 ## Inputing missing values
 
 ### 1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with `NA`s)
+
+Calculated missing values for each column.
 
 
 ```r
@@ -176,6 +191,8 @@ Decided to use already calculated for plot 5 Minute Average Data.
 
 ### 3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
+Loopede thru **cleanData** to replace **NA** values with that days **mean** value calculated before.
+
 
 ```r
 # Initialize Clean Data
@@ -189,6 +206,8 @@ for(i in 1:nrow(cleanData)){
 ```
 
 ### 4. Make a histogram of the total number of steps taken each day and Calculate and report the **mean** and **median** total number of steps taken per day.
+
+Used **tapply** to calculate sum of steps per day in **cleanData**.
 
 
 ```r
@@ -208,6 +227,8 @@ dev.off()
 ```
 
 ![Steps Per Day After NA's Filled With Mean](figure/003.png) 
+
+Calculated **mean** and **median** of **cleanData**.
 
 
 ```r
@@ -230,7 +251,7 @@ medianClean
 ## [1] 10765.59
 ```
 
-As mean selected as filler for NA data. Mean value does not chane and change median is negligible.
+As **mean** of **raw** data selected as filler for **NA** data. **Mean** value does not change and change in **median** is negligible.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
@@ -242,6 +263,7 @@ Added a new column named **day** to **cleanData** which holds day of the week. A
 
 ```r
 ## Find Weekdays and Weekends
+## https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html
 cleanData$day <- format(cleanData$date, "%A")
 cleanData$day[cleanData$day == "Monday"] <- "weekday"
 cleanData$day[cleanData$day == "Tuesday"] <- "weekday"
